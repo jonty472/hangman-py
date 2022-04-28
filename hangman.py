@@ -50,8 +50,8 @@ def choose_word(wordlist):
 # so that it can be accessed from anywhere in the program
 wordlist = load_words()
 
-secret_word = 'hi'
-letters_guessed = ['i']
+secret_word = 'apple'
+letters_guessed = ['e', 'i', 'k', 'p', 'r', 's']
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
@@ -86,27 +86,16 @@ def get_guessed_word(secret_word, letters_guessed):
     returns: string, comprised of letters, underscores (_), and spaces that represents
       which letters in secret_word have been guessed so far.
     '''
-    hidden_char = '_'
-    
-    # splitting secret word into list for dict loop
-    secret_word_lst = list(secret_word)
-    secret_word_dict1 = {}
-    # loop to create translation table for secret word 
-    for i in secret_word_lst:
-      secret_word_dict1[i] = hidden_char 
-    print(secret_word_dict1)
 
-    # secret word dict test
-    secret_word_dict = {'h': '_', 'i': '_'}
+    # check if guess in secret if so then append letter, else replace with '_'
+    hangman = []
+    for letter in secret_word:
+      if letter in letters_guessed:
+        hangman.append(letter)
+      else:
+        hangman.append('_')
 
-    for key in secret_word:
-      print(secret_word_dict[key])
-    
-    # changes hidden char to letter if guessed letter correct
-    for letter in letters_guessed:
-      if letter in secret_word_dict:
-        secret_word_dict[letter] = letter
-    print(secret_word_dict)
+    return (' '.join(hangman))
 
 get_guessed_word(secret_word, letters_guessed)
 
@@ -117,8 +106,14 @@ def get_available_letters(letters_guessed):
     returns: string (of letters), comprised of letters that represents which letters have not
       yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    available_letters = list(string.ascii_lowercase)
+    for letter in letters_guessed:
+      if letter in available_letters:
+        available_letters.remove(letter)
+
+    return print(''.join(available_letters)) 
+
+get_available_letters(letters_guessed)
     
     
 
