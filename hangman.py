@@ -50,9 +50,6 @@ def choose_word(wordlist):
 # so that it can be accessed from anywhere in the program
 wordlist = load_words()
 
-secret_word = 'apple'
-letters_guessed = ['e', 'i', 'k', 'p', 'r', 's']
-
 def is_word_guessed(secret_word, letters_guessed):
     '''
     secret_word: string, the word the user is guessing; assumes all letters are
@@ -72,10 +69,7 @@ def is_word_guessed(secret_word, letters_guessed):
       return (True)
     else:
       return (False)
-
-      
-    
-is_word_guessed(secret_word, letters_guessed) 
+ 
 
 
 
@@ -94,10 +88,10 @@ def get_guessed_word(secret_word, letters_guessed):
         hangman.append(letter)
       else:
         hangman.append('_')
+    
+    join_hangman = ' '.join(hangman)
+    return print(join_hangman)
 
-    return (' '.join(hangman))
-
-get_guessed_word(secret_word, letters_guessed)
 
 
 def get_available_letters(letters_guessed):
@@ -113,9 +107,6 @@ def get_available_letters(letters_guessed):
 
     return print(''.join(available_letters)) 
 
-get_available_letters(letters_guessed)
-    
-    
 
 def hangman(secret_word):
     '''
@@ -142,10 +133,27 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    print('Welcome to the game Hangman!')
+    print('I am thinking of a word that is {0} letters long.'.format(len(secret_word)))
+    print('-------------')
 
+    guesses_left = 6
+    letters_guessed = []
+    for guesses in range(7):
+      if guesses_left > 0:
+        print('You have {0} guesses left.'.format(guesses_left))
+        get_available_letters(letters_guessed)
+        letter_guessed = input('Please guess a letter: ')
+        letters_guessed.append(letter_guessed)
 
+        if letter_guessed in secret_word:
+          print('Good guess:'), get_guessed_word(secret_word, letters_guessed)
+        elif letter_guessed not in secret_word:
+          print('Oops! That letter is not in my word:')
+          get_guessed_word(secret_word, letters_guessed)
+        print('-------------')
+
+        guesses_left -= 1
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
@@ -230,7 +238,8 @@ if __name__ == "__main__":
     # To test part 2, comment out the pass line above and
     # uncomment the following two lines.
     
-    secret_word = choose_word(wordlist)
+    #secret_word = choose_word(wordlist)
+    secret_word = 'apple'
     hangman(secret_word)
 
 ###############
