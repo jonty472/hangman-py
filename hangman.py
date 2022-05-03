@@ -137,17 +137,29 @@ def hangman(secret_word):
     print('I am thinking of a word that is {0} letters long.'.format(len(secret_word)))
     print('-------------')
 
+    secret_letters = list(secret_word)
+    print(secret_letters)
     guesses_left = 6
     letters_guessed = []
-    for guesses in range(7):
-      if guesses_left > 0:
+
+    for guesses in range(1,7):
+      print(letters_guessed)
+
+      if is_word_guessed(secret_word, letters_guessed) == True:
+        return print('game over')
+
+      elif is_word_guessed(secret_word, letters_guessed) == False:
         print('You have {0} guesses left.'.format(guesses_left))
         get_available_letters(letters_guessed)
         letter_guessed = input('Please guess a letter: ')
         letters_guessed.append(letter_guessed)
 
+
         if letter_guessed in secret_word:
+          if secret_letters.count(letter_guessed) > 1:
+            letters_guessed.append(letter_guessed)
           print('Good guess:'), get_guessed_word(secret_word, letters_guessed)
+
         elif letter_guessed not in secret_word:
           print('Oops! That letter is not in my word:')
           get_guessed_word(secret_word, letters_guessed)
