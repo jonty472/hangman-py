@@ -90,7 +90,7 @@ def get_guessed_word(secret_word, letters_guessed):
         hangman.append('_')
     
     join_hangman = ' '.join(hangman)
-    return print(join_hangman)
+    return join_hangman
 
 
 
@@ -142,6 +142,9 @@ def hangman(secret_word):
     guesses_left = 6
     letters_guessed = []
 
+   # warnings left equates to if user has used non-alphabet or guessed same letter > 1 
+    warnings_left = 3
+
     for guesses in range(1,7):
       print(letters_guessed)
 
@@ -152,20 +155,27 @@ def hangman(secret_word):
         print('You have {0} guesses left.'.format(guesses_left))
         get_available_letters(letters_guessed)
         letter_guessed = input('Please guess a letter: ')
-        letters_guessed.append(letter_guessed)
 
-
-        if letter_guessed in secret_word:
+        if letter_guessed.isalpha == True:
+          letters_guessed.append(letter_guessed)
+          guesses_left -= 1
+        elif letter_guessed.isalpha == False: 
+          if warnings_left == 0:
+            guesses_left -= 1
+          else:
+            warnings_left -= 1
+            print('Oops! That is not a valid letter. You have {0} warnings left:'
+            .format(warnings_left))
+        
+        elif letter_guessed in secret_word:
           if secret_letters.count(letter_guessed) > 1:
             letters_guessed.append(letter_guessed)
-          print('Good guess:'), get_guessed_word(secret_word, letters_guessed)
+          print('Good guess:', get_guessed_word(secret_word, letters_guessed))
 
         elif letter_guessed not in secret_word:
           print('Oops! That letter is not in my word:')
           get_guessed_word(secret_word, letters_guessed)
         print('-------------')
-
-        guesses_left -= 1
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
